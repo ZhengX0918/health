@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zx.health.dao.CheckGroupMapper">
+    <resultMap id="pageMap" type="com.zx.health.pojo.CheckGroup" autoMapping="true">
+        <id property="id" column="id"/>
+    </resultMap>
+    <select id="findPage" parameterType="String" resultMap="pageMap">
+        select * from t_checkgroup
+        <where>
+            <if test="queryString!=null and queryString.length > 0">
+                 code like concat('%',#{queryString},'%') or name like concat('%',#{queryString},'%') or helpCode like concat('%',#{queryString},'%')
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="allMap" type="com.zx.health.pojo.CheckItem" autoMapping="true">
+        <id property="id" column="id"/>
+    </resultMap>
+    <select id="findAllCheckItem" resultMap="allMap">
+        select *
+        from t_checkitem
+    </select>
+
+    <insert id="addCheckGroup" parameterType="com.zx.health.pojo.CheckGroup" useGeneratedKeys="true" keyProperty="id">
+
+        INSERT INTO t_checkgroup (
+        id ,
+        code ,
+        name ,
+        helpCode ,
+        sex ,
+        remark ,
+        attention
+        )
+        VALUES
+        (
+        null,
+        #{code},
+        #{name},
+        #{helpCode},
+        #{sex},
+        #{remark},
+        #{attention}
+        );
+    </insert>
+
+   <!-- <insert id="addCheckGroupIdAndCheckItemId">
+        insert into t_checkgroup_checkitem(checkgroup_id, checkitem_id) values
+        <foreach collection="array" item="id">
+            (#{checkGroupId},#{id})
+        </foreach>
+    </insert>-->
+    <insert id="setCheckGroupAndCheckItem" parameterType="hashmap">
+        insert into t_checkgroup_checkitem(checkgroup_id, checkitem_id) values(#{checkGroupId},#{checkItemId})
+
+    </insert>
+    <delete id="deleteCheckGroupById" parameterType="Integer">
+        delete from t_checkgroup_checkitem where checkgroup_id = #{id}
+    </delete>
+    <delete id="deleteCheckItem" parameterType="Integer">
+        delete from t_checkgroup where
+    </delete>
+
+    <select id="findCheckGroupById" resultType="com.zx.health.pojo.CheckGroup">
+        select *from t_checkgroup where id=#{id}
+    </select>
+
+    <resultMap id="ciMap" type="Integer" autoMapping="true">
+
+    </resultMap>
+    <select id="findCheckItemIdByCheckGroupId" parameterType="Integer" resultMap="ciMap">
+        select checkitem_id from t_checkgroup_checkitem where checkgroup_id = #{id}
+    </select>
+
+    <resultMap id="allMap2" type="com.zx.health.pojo.CheckItem" autoMapping="true">
+
+    </resultMap>
+    <select id="findAllCheckItems" parameterType="Integer" resultMap="allMap2">
+        select * from t_checkitem
+    </select>
+
+    <update id="editCheckGroup" parameterType="com.zx.health.pojo.CheckGroup">
+        update t_checkgroup
+           <set>
+               <if test="name != null">
+                   name = #{name},
+               </if>
+               <if test="sex != null">
+                   sex = #{sex},
+               </if>
+               <if test="code != null">
+                   code = #{code},
+               </if>
+               <if test="helpCode != null">
+                   helpCode = #{helpCode},
+               </if>
+               <if test="attention != null">
+                   attention = #{attention},
+               </if>
+               <if test="remark != null">
+                   remark = #{remark},
+               </if>
+           </set>
+           where id = #{id}
+    </update>
+    <!--<update id="editCheckGroupAndCheckItem" parameterType="hashmap">
+        update t_checkgroup_checkitem
+       <set>
+           <if test="checkitem_id !=null">
+               checkitem_id = #{checkItemId}
+           </if>
+       </set>
+where checkgroup_id = #{checkGroupId}
+    </update>-->
+
+    <delete id="deleteChecGroupIdAndCheckItemId" parameterType="Integer">
+        delete  from t_checkgroup_checkitem where checkgroup_id = #{id}
+    </delete>
+</mapper>

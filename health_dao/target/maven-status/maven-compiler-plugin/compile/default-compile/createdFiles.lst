@@ -1,0 +1,5 @@
+com\zx\health\dao\SetMealMapper.class
+com\zx\health\dao\CheckItemMapper.class
+com\zx\health\dao\OrderSettingMapper.class
+com\zx\health\dao\UserMapper.class
+com\zx\health\dao\CheckGroupMapper.class
