@@ -1,0 +1,5 @@
+com\zx\health\controller\SetMealController.class
+com\zx\health\controller\UserController.class
+com\zx\health\controller\OrderSettingController.class
+com\zx\health\controller\CheckGroupController.class
+com\zx\health\controller\CheckItemController.class
