@@ -1,0 +1,5 @@
+com\zx\health\service\OrderSettingService.class
+com\zx\health\service\SetMealService.class
+com\zx\health\service\CheckGroupService.class
+com\zx\health\service\CheckItemService.class
+com\zx\health\service\UserService.class
